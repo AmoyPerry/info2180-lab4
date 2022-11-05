@@ -1,7 +1,8 @@
 window.onload = function (){
     
     var searchbutton = document.querySelector("button")
-    console.log(searchbutton)
+    var searchInput = document.querySelector("input")
+    var input;
     var httpRequest;
     
 
@@ -9,30 +10,28 @@ window.onload = function (){
     {
             ele.preventDefault()
             // get request
-            httpRequest = new XMLHttpRequest();
-
-            var url = "superheroes.php";
+            var input=searchInput.value.trim()
+            console.log(input)
+           
+            httpRequest = new XMLHttpRequest()
+            var url = "superheroes.php?query="+input;
             httpRequest.onreadystatechange = myFunction;
             httpRequest.open('Get', url);
             httpRequest.send();
           });
 
             function myFunction(){
-              if (httpRequest.readyState === XMLHttpRequest.DONE)
+              if (this.readyState === XMLHttpRequest.DONE)
               {
-                if (httpRequest.status===200)
+                if (this.status===200)
                 {
-                  var response = httpRequest.responseText;
-                  alert(response)
+          
+                 var t= document.getElementById("result").innerHTML = this.responseText;
+                 console.log(t)
+                
                 }
-                else
-                {
-                  alert("No php found!")
-                }
-      
+                //httpRequest.open("Get", 'superheroes.php?h='+input);
+                //httpRequest.send();
               }
             }
-
-
-   
-  }
+          }

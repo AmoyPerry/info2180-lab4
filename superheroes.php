@@ -65,8 +65,30 @@ $superheroes = [
 
 ?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+
+<?php 
+$query = filter_input(INPUT_GET, "query", FILTER_SANITIZE_STRING);
+$notFound ="SUPERHERO NOT FOUND";
+$check=false;
+foreach ($superheroes as $superhero)
+{
+    if ($superhero['alias'] === $query or $superhero['name']==$query)
+    {
+        $check=true;
+        echo"<h3>{$superhero['alias']}</h3>";
+        echo"<h4>{$superhero['name']}</h4>";
+        echo"</p>{$superhero['biography']}</p>";
+        
+    }
+    elseif(strlen($query) === 0){
+    
+      echo"<ul><li>{$superhero['alias']}</li> </ul>";#shorthand way of opening the php script and echoing -->
+     $check=true;
+    } 
+
+}
+if ($check == false)
+{
+        echo "<p>{$notFound}</p>";
+}
+?>
